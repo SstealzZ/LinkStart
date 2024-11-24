@@ -51,6 +51,8 @@ export const UserProvider = ({ children }) => {
     
             return true;
         } catch (err) {
+            console.error('Erreur de connexion:', err.response?.data?.detail || err.message);
+            setIsAuthenticated(false);
             return false;
         } finally {
             setLoading(false);
