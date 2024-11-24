@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/front/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_BASE_URL=http://api:8000
+      - REACT_APP_AUTH_LOGIN_ENDPOINT=${REACT_APP_AUTH_LOGIN_ENDPOINT}
+      - REACT_APP_AUTH_REGISTER_ENDPOINT=${REACT_APP_AUTH_REGISTER_ENDPOINT}
+      - REACT_APP_AUTH_ME_ENDPOINT=${REACT_APP_AUTH_ME_ENDPOINT}
+      - REACT_APP_AUTH_REFRESH_ENDPOINT=${REACT_APP_AUTH_REFRESH_ENDPOINT}
+      - REACT_APP_SERVICES_ENDPOINT=${REACT_APP_SERVICES_ENDPOINT}
+      - REACT_APP_PING_ENDPOINT=${REACT_APP_PING_ENDPOINT}
+      - REACT_APP_TITLE=${REACT_APP_TITLE}
+      - REACT_APP_DESCRIPTION=${REACT_APP_DESCRIPTION}
+    depends_on:
+      - api
+    networks:
+      - linkstart-network
+
+  api:
+    build:
+      context: ..
+      dockerfile: docker/api/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+      - DB_NAME=${DB_NAME}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - JWT_ALGORITHM=${JWT_ALGORITHM}
+      - JWT_ACCESS_TOKEN_EXPIRE_MINUTES=${JWT_ACCESS_TOKEN_EXPIRE_MINUTES}
+      - FRONTEND_URL=http://frontend:3000
+    depends_on:
+      - mongodb
+    networks:
+      - linkstart-network
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - linkstart-network
+
+networks:
+  linkstart-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
