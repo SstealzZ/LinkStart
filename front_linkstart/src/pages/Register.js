@@ -16,6 +16,7 @@ function Register() {
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
+        console.log('Formulaire d\'inscription soumis avec:', { username, email, password });
         e.preventDefault();
         if (username.length <= 2) {
             setError('Le nom d\'utilisateur doit contenir plus de 3 caractères.');
@@ -27,6 +28,7 @@ function Register() {
         }
         setError(''); // Réinitialiser l'erreur si tout est bon
         const success = await register(username, email, password);
+        console.log('Résultat de l\'inscription:', success);
         if (success) {
             navigate('/');
         } else {

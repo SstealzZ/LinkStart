@@ -15,18 +15,21 @@ function Login() {
     const navigate = useNavigate(); // Hook pour rediriger l'utilisateur
 
     const handleSubmit = async (e) => {
+        console.log('Formulaire soumis avec:', { username, password }); // Log des informations de soumission
         e.preventDefault();
         setError('');
         setLoading(true);
 
         try {
             const success = await login(username, password);
+            console.log('Résultat de la connexion:', success); // Log du résultat de la connexion
             if (success) {
                 navigate('/');
             } else {
                 setError('Nom d\'utilisateur ou mot de passe incorrect.');
             }
         } catch (err) {
+            console.error('Erreur lors de la connexion:', err); // Log de l'erreur
             setError('Une erreur est survenue. Veuillez réessayer.');
         } finally {
             setLoading(false);

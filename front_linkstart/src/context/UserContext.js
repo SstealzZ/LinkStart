@@ -26,6 +26,7 @@ export const UserProvider = ({ children }) => {
     }, []);
 
     const login = async (username, password) => {
+        console.log('Tentative de connexion avec:', { username, password });
         setLoading(true);
         try {
             const params = new URLSearchParams();
@@ -36,6 +37,7 @@ export const UserProvider = ({ children }) => {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             });
 
+            console.log('Réponse de connexion:', response.data);
             const { access_token } = response.data;
             const userResponse = await axios.get(process.env.REACT_APP_AUTH_ME_ENDPOINT, {
                 headers: { Authorization: `Bearer ${access_token}` },
@@ -51,7 +53,7 @@ export const UserProvider = ({ children }) => {
     
             return true;
         } catch (err) {
-            console.error('Erreur de connexion:', err.response?.data?.detail || err.message);
+            console.error('Erreur de connexion:', err);
             setIsAuthenticated(false);
             return false;
         } finally {
@@ -68,6 +70,7 @@ export const UserProvider = ({ children }) => {
     };
 
     const register = async (username, email, password) => {
+        console.log('Tentative d\'inscription avec:', { username, email, password });
         setLoading(true);
         try {
             const response = await axios.post(process.env.REACT_APP_AUTH_REGISTER_ENDPOINT, {
@@ -75,6 +78,7 @@ export const UserProvider = ({ children }) => {
                 email,
                 password,
             });
+            console.log('Réponse d\'inscription:', response.data);
             const { access_token } = response.data;
 
             const userResponse = await axios.get(process.env.REACT_APP_AUTH_ME_ENDPOINT, {
@@ -92,7 +96,7 @@ export const UserProvider = ({ children }) => {
 
             return true;
         } catch (err) {
-            console.error('Erreur d\'inscription:', err.response?.data?.detail || err.message);
+            console.error('Erreur d\'inscription:', err);
             return false;
         } finally {
             setLoading(false);
