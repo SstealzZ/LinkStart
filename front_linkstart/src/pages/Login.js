@@ -8,28 +8,28 @@ import { useUser } from '../context/UserContext'; // Import du contexte utilisat
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(null); // Gestion des erreurs
-    const [loading, setLoading] = useState(false); // Indicateur de chargement
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const theme = useTheme();
     const { login } = useUser(); // Récupération de la méthode login depuis le UserContext
     const navigate = useNavigate(); // Hook pour rediriger l'utilisateur
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(null); // Réinitialise les erreurs
-        setLoading(true); // Active l'état de chargement
+        setError('');
+        setLoading(true);
 
         try {
-            const success = await login(username, password); // Appelle la méthode login du contexte
+            const success = await login(username, password);
             if (success) {
-                navigate('/'); // Redirige vers la page d'accueil après connexion
+                navigate('/');
             } else {
-                setError('Nom d’utilisateur ou mot de passe incorrect.');
+                setError('Nom d\'utilisateur ou mot de passe incorrect.');
             }
         } catch (err) {
             setError('Une erreur est survenue. Veuillez réessayer.');
         } finally {
-            setLoading(false); // Désactive l'état de chargement
+            setLoading(false);
         }
     };
 
@@ -77,8 +77,8 @@ function Login() {
                     <Typography variant="h5" component="h1" gutterBottom>
                         Connexion
                     </Typography>
+                    {error && <Typography color="error" sx={{ mb: 2 }}>{error}</Typography>}
                     <form onSubmit={handleSubmit}>
-                        {error && <Typography color="error">{error}</Typography>}
                         <TextField
                             label="Nom d'utilisateur"
                             variant="outlined"
