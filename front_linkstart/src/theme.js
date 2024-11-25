@@ -1,6 +1,27 @@
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
+  typography: {
+    fontFamily: "'Roboto', sans-serif",
+    h1: {
+      fontFamily: "'Roboto', sans-serif",
+    },
+    h2: {
+      fontFamily: "'Roboto', sans-serif",
+    },
+    h3: {
+      fontFamily: "'Roboto', sans-serif",
+    },
+    body1: {
+      fontFamily: "'Roboto', sans-serif",
+    },
+    body2: {
+      fontFamily: "'Roboto', sans-serif",
+    },
+    button: {
+      fontFamily: "'Roboto', sans-serif",
+    },
+  },
   palette: {
     mode: 'dark',
     primary: {
