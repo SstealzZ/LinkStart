@@ -4,7 +4,7 @@ import App from "./App";
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline, GlobalStyles } from "@mui/material";
 import theme from "./theme";
-import './fonts.css';
+import './font.css';
 
 const globalStyles = (
     <GlobalStyles styles={{
