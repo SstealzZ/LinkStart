@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-// Set up Axios base URL
+// Set up Axios base URL and default config
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.withCredentials = false;
 
 const UserContext = createContext(null);
 
@@ -77,6 +78,11 @@ export const UserProvider = ({ children }) => {
                 username,
                 email,
                 password,
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
             });
             console.log('Réponse d\'inscription:', response.data);
             const { access_token } = response.data;
